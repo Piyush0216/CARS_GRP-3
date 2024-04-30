@@ -79,7 +79,8 @@ public class VictimDaoImpl implements VictimDao{
 			String phone_number=rst.getString("phone_number");
 			String address=rst.getString("address");
 			int incident_id=rst.getInt("incident_id");
-			Victim victim=new Victim(id,first_name,last_name,date_of_birth,gender,phone_number,address,incident_id);
+			String isActive=rst.getString("isActive");
+			Victim victim=new Victim(id,first_name,last_name,date_of_birth,gender,phone_number,address,incident_id,isActive);
 			list.add(victim);
 		}
 		DBConnection.dbClose();
@@ -151,7 +152,7 @@ public class VictimDaoImpl implements VictimDao{
 			String last_name=rst.getString("last_name");
 			String address=rst.getString("address");
 			int incident_id=rst.getInt("incident_id");
-			Victim victim=new Victim(id,first_name,last_name,"","","",address,incident_id);
+			Victim victim=new Victim(id,first_name,last_name,"","","",address,incident_id,"");
 			list.add(victim);
 		}
 		DBConnection.dbClose();
