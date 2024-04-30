@@ -9,9 +9,10 @@ public class Victim {
 	private String phone_number;
 	private String address;
 	private int incident_id;
+	private String isActive;
 
 	public Victim(int victim_id, String first_name, String last_name, String date_of_birth, String gender,
-			String phone_number, String address, int incident_id) {
+			String phone_number, String address, int incident_id,String isActive) {
 		super();
 		this.victim_id = victim_id;
 		this.first_name = first_name;
@@ -21,7 +22,18 @@ public class Victim {
 		this.phone_number = phone_number;
 		this.address = address;
 		this.incident_id = incident_id;
+		this.isActive=isActive;
 	}
+
+	public String getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
+	}
+
+	
 
 	public Victim() {
 		super();
@@ -96,7 +108,9 @@ public class Victim {
 	public String toString() {
 		return "Victim [victim_id=" + victim_id + ", first_name=" + first_name + ", last_name=" + last_name
 				+ ", date_of_birth=" + date_of_birth + ", gender=" + gender + ", phone_number=" + phone_number
-				+ ", address=" + address + ", incident_id=" + incident_id + "]";
+				+ ", address=" + address + ", incident_id=" + incident_id + ", isActive=" + isActive + "]";
 	}
+
+	
 
 }

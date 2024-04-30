@@ -28,6 +28,7 @@ public class SuspectController {
 			System.out.println("Press 5. Display All Suspects");
 			System.out.println("Press 6. Display Suspects Involved In More Than One Incidents");
 			System.out.println("Press 7. Display Suspects By Their Incident Type");
+			System.out.println("Press 8. Get Suspects By Sorted Incident Id");
 			System.out.println("Press 0. To Exit");
 			int input=sc.nextInt();
 			if(input==0) {
@@ -38,10 +39,11 @@ public class SuspectController {
 			Random random = new Random();
 			int randomNumber = random.nextInt();
 			int id = randomNumber<0 ? randomNumber*-1:randomNumber;
-//			System.out.println(id);
 			
 			switch(input) {
 			case 1:
+				System.out.println(id);
+
 				System.out.println("Enter First Name : ");
 				sc.nextLine();
 				String first_name=sc.nextLine();
@@ -78,8 +80,12 @@ public class SuspectController {
 				}
 				break;
 			case 2:
-				System.out.println("Enter Suspect Id : ");
 				try {
+					List<Suspect> list = suspectService.findAll();
+					for(Suspect s:list) {
+						System.out.println(s);
+					}
+					System.out.println("Enter Suspect Id : ");
 					suspectService.deleteByID(sc.nextInt());
 					System.out.println("Suspect record deleted...");
 				} catch (SQLException e) {
@@ -89,8 +95,12 @@ public class SuspectController {
 				}
 				break;
 			case 3:
-				System.out.println("Enter Suspect Id : ");
 				try {
+					List<Suspect> listS = suspectService.findAll();
+					for(Suspect s:listS) {
+						System.out.println(s);
+					}
+					System.out.println("Enter Suspect Id : ");
 					suspectService.softDeleteByID(sc.nextInt());
 					System.out.println("Suspect record de-activated");
 				} catch (SQLException e) {
@@ -100,12 +110,16 @@ public class SuspectController {
 				}
 				break;
 			case 4:
-				System.out.println("Enter suspect id : ");
-				int given_id=sc.nextInt();
-				System.out.println("Enter updated address : ");
-				sc.nextLine();
-				String updatedAddress=sc.nextLine();
 				try {
+					List<Suspect> listSuspect = suspectService.findAll();
+					for(Suspect s:listSuspect) {
+						System.out.println(s);
+					}
+					System.out.println("Enter suspect id : ");
+					int given_id=sc.nextInt();
+					System.out.println("Enter updated address : ");
+					sc.nextLine();
+					String updatedAddress=sc.nextLine();
 					suspectService.update(given_id,updatedAddress);
 					System.out.println("Updated Successfully...");
 				} catch (SQLException e) {
@@ -117,8 +131,8 @@ public class SuspectController {
 			case 5:
 				
 				try {
-					List<Suspect> list = suspectService.findAll();
-					for(Suspect s:list) {
+					List<Suspect> l = suspectService.findAll();
+					for(Suspect s:l) {
 						System.out.println(s);
 					}
 				} catch (SQLException e) {
@@ -127,8 +141,8 @@ public class SuspectController {
 				break;
 			case 6:
 				try {
-					List<SuspectDto> list=suspectService.getSuspectsInvolvedInManyIncidents();
-					for(SuspectDto s:list) {
+					List<SuspectDto> li=suspectService.getSuspectsInvolvedInManyIncidents();
+					for(SuspectDto s:li) {
 						System.out.println(s);
 					}
 				} catch (SQLException e) {
@@ -137,9 +151,23 @@ public class SuspectController {
 				break;
 			case 7:
 				try {
-					List<Suspect> list=suspectService.getSuspectsbyIncidentType();
-					for(Suspect s:list) {
+					List<Suspect> lis=suspectService.getSuspectsbyIncidentType();
+					for(Suspect s:lis) {
 						System.out.println(s);
+					}
+				} catch (SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 8:
+				try {
+					System.out.println("Enter Sort Direction 'ASC or DESC'");
+					sc.nextLine();
+					String sortDirection=sc.nextLine();
+					List<Suspect> list = suspectService.findAll();
+					list = suspectService.sortSuspectByIncidentId(list,sortDirection);
+					for(Suspect v:list) {
+						System.out.println(v);
 					}
 				} catch (SQLException e) {
 					System.out.println(e.getMessage());

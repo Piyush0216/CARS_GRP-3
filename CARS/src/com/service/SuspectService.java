@@ -1,6 +1,7 @@
 package com.service;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import com.dao.SuspectDao;
@@ -8,6 +9,8 @@ import com.implDao.SuspectDaoImpl;
 import com.dto.SuspectDto;
 import com.exception.ResourceNotFoundException;
 import com.model.Suspect;
+import com.utility.SuspectSortUtilityAsc;
+import com.utility.SuspectSortUtilityDesc;
 
 public class SuspectService {
 
@@ -55,6 +58,18 @@ public class SuspectService {
 	public List<Suspect> getSuspectsbyIncidentType() throws SQLException{
 		// TODO Auto-generated method stub
 		return dao.getSuspectsbyIncidentType();
+	}
+	
+	
+	
+	public List<Suspect> sortSuspectByIncidentId(List<Suspect> list,String sortDirection){
+		if(sortDirection.equalsIgnoreCase("ASC")) {
+			Collections.sort(list,new SuspectSortUtilityAsc());
+		}
+		if(sortDirection.equalsIgnoreCase("DESC")) {
+			Collections.sort(list,new SuspectSortUtilityDesc());
+		}
+		return list;
 	}
 
 }

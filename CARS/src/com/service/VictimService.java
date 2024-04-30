@@ -1,6 +1,7 @@
 package com.service;
 
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import com.dao.VictimDao;
@@ -8,6 +9,8 @@ import com.dto.VictimDto;
 import com.exception.ResourceNotFoundException;
 import com.implDao.VictimDaoImpl;
 import com.model.Victim;
+import com.utility.VictimSortUtilityAsc;
+import com.utility.VictimSortUtilityDesc;
 
 public class VictimService {
 
@@ -54,5 +57,14 @@ public class VictimService {
 		return dao.getVictimsByIncidentLocation();
 	}
 
+	public List<Victim> sortVictimByIncidentId(List<Victim> list,String sortDirection){
+		if(sortDirection.equalsIgnoreCase("ASC")) {
+			Collections.sort(list,new VictimSortUtilityAsc());
+		}
+		if(sortDirection.equalsIgnoreCase("DESC")) {
+			Collections.sort(list,new VictimSortUtilityDesc());
+		}
+		return list;
+	}
 	
 }

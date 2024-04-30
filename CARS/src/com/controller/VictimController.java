@@ -32,6 +32,7 @@ public class VictimController {
 			System.out.println("Press 5. Update Victim ");
 			System.out.println("Press 6. See Victims Involved in Multiple Incidents");
 			System.out.println("Press 7. See Victims By Incident Location");
+			System.out.println("Press 8. Get Victims By Sorted Incident Id");
 			System.out.println("Press 0. To Exit");
 			
 			int input=sc.nextInt();
@@ -69,7 +70,7 @@ public class VictimController {
 				int incident_id = sc.nextInt();
 				
 				// Attach values to Victim Object
-				Victim victim = new Victim(id,first_name,last_name,date_of_birth,gender,phone_number,address,incident_id);
+				Victim victim = new Victim(id,first_name,last_name,date_of_birth,gender,phone_number,address,incident_id,"");
 				try {
 					int status=victimService.insert(victim);
 					if(status==1) {
@@ -82,8 +83,13 @@ public class VictimController {
 				}
 				break;
 			case 2:
-				System.out.println("Enter Victim ID : ");
 				try {
+					List<Victim> list  = victimService.findAll();
+					for(Victim v:list) {
+						System.out.println(v);
+					}
+					System.out.println();
+					System.out.println("Enter Victim ID : ");
 					victimService.deleteById(sc.nextInt());
 					System.out.println("Victim record deleted");
 				}catch(SQLException e) {
@@ -93,8 +99,13 @@ public class VictimController {
 				}
 				break;
 			case 3:
-				System.out.println("Enter Victim Id : ");
 				try {
+					List<Victim> list  = victimService.findAll();
+					for(Victim v:list) {
+						System.out.println(v);
+					}
+					System.out.println();
+					System.out.println("Enter Victim Id : ");
 					victimService.softDeleteById(sc.nextInt());
 					System.out.println("Victim record de-activated..");
 				}catch(SQLException e) {
@@ -115,6 +126,10 @@ public class VictimController {
 				break;
 			case 5:
 				try {
+					List<Victim> list  = victimService.findAll();
+					for(Victim v:list) {
+						System.out.println(v);
+					}
 					System.out.println("Enter victim id");
 					int given_id=sc.nextInt();
 					System.out.println("Enter updated address : ");
@@ -145,6 +160,20 @@ public class VictimController {
 						System.out.println(v);
 					}
 				}catch(SQLException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			case 8:
+				try {
+					System.out.println("Enter Sort Direction 'ASC or DESC'");
+					sc.nextLine();
+					String sortDirection=sc.nextLine();
+					List<Victim> list = victimService.findAll();
+					list = victimService.sortVictimByIncidentId(list,sortDirection);
+					for(Victim v:list) {
+						System.out.println(v);
+					}
+				} catch (SQLException e) {
 					System.out.println(e.getMessage());
 				}
 				break;
